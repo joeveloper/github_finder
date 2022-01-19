@@ -7,12 +7,15 @@ export class Search extends Component {
         text: ''
     }
 
+    
+    //declaring prop types to control data type
     static propTypes = {
         searchUsers: PropTypes.func.isRequired,
         clearUsers: PropTypes.func.isRequired,
         showClear: PropTypes.bool.isRequired
-      }
+    }
 
+    //after form submit
     onSubmit = e => {
        e.preventDefault();
        if (this.state.text === "") {
@@ -22,9 +25,10 @@ export class Search extends Component {
        this.setState({text: ''});
     }
 
-     onChange = (e) => {
+    //after entering your searc text
+    onChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
- }
+    }
     render() {
 
         const {showClear, clearUsers} = this.props;
