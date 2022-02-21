@@ -7,12 +7,14 @@ import Users from './components/users/Users';
 import Search from './components/users/Search';
 import About from './components/pages/About';
 import { Alert } from './components/layout/Alert';
+import User from './components/users/User';
 
 class App extends Component {
 
   //set state initial values 
   state = {
     users: [],
+    user: {},
     loading: false,
     alert: null
   }
@@ -26,6 +28,15 @@ class App extends Component {
     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
     this.setState({users: res.data.items, loading: false});
 };
+
+//Get a single github user
+  getUser = async (username) => {
+    this.setState({loading: true});
+  const res = await axios.get(`https://api.github.com/users?/${username}&client_id=
+    ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
+    ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    this.setState({users: res.data, loading: false});
+  }
 
 
   //Clear users from state
@@ -42,7 +53,7 @@ class App extends Component {
 
    render() {
      //destructure state 
-     const {users, loading} = this.state;
+     const {users, user, loading} = this.state;
     return (
       <Router>
         <div className="App">
@@ -50,20 +61,21 @@ class App extends Component {
             <div className="container">
               <Alert alert={this.state.alert}/>
               <Routes>
-                <Route exact path='/' element={<Search/>} render={props => (
-                  <Fragment>
+                <Route exact path='/' element={<Fragment>
                     <Search 
                   searchUsers={this.searchUsers} 
                   clearUsers={this.clearUsers} 
                   showClear={users.length > 0 ? true : false}
                   setAlert = {this.setAlert}
                   />
+
                   <Users loading={loading} users={users}/>
-                  </Fragment>
-                    )} />
+                  </Fragment>} />
                     <Route exact path='/about' element={<About/>} />
+                    <Route exact path='/user/:login' render={(props) => (
+                      <User { ...props} getUser={this.getUser} user={user} loading={loading} />
+                    )} />
               </Routes>
-              
           </div>
         </div>
       </Router>
