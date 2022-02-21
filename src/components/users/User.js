@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import withRouter from '../HOC/withRouter';
 
 export class User extends Component {
-  componentDidMount() {
-    this.props.getUser(this.props.match.params.login)
+  async componentDidMount() {
+    console.log(this.props);
+    await this.props.getUser(this.props.params.login)
   }
   render() {
     const {
@@ -23,4 +25,4 @@ const {loading} = this.props;
   }
 }
 
-export default User
+export default withRouter(User);

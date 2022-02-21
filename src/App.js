@@ -1,5 +1,5 @@
-import React, {Fragment, Component} from 'react';
-import { BrowserRouter as Router, Routes , Route } from 'react-router-dom';
+import React, { Fragment, Component } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 import Navbar from './components/layout/Navbar';
@@ -20,67 +20,75 @@ class App extends Component {
   }
 
 
-//Search Github users using the GET API
+  //Search Github users using the GET API
   searchUsers = async (text) => {
-    this.setState({loading: true});
-  const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=
+    this.setState({ loading: true });
+    const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=
     ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-    this.setState({users: res.data.items, loading: false});
-};
+    this.setState({ users: res.data.items, loading: false });
+  };
 
-//Get a single github user
+  //Get a single github user
   getUser = async (username) => {
-    this.setState({loading: true});
-  const res = await axios.get(`https://api.github.com/users?/${username}&client_id=
+    this.setState({ loading: true });
+    const res = await axios.get(`https://api.github.com/users?/${username}&client_id=
     ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-    this.setState({users: res.data, loading: false});
+    this.setState({ users: res.data, loading: false });
+    console.log(res.data, '<== this is from the `getUser` function')
   }
 
 
   //Clear users from state
   clearUsers = () => {
-    this.setState({users: [], loading: false});
+    this.setState({ users: [], loading: false });
   }
 
   //Set alert for empty search string
   setAlert = (msg, type) => {
-    this.setState({alert: {msg, type}});
-    setTimeout(() => { this.setState({alert: null, loading: false}) 
+    this.setState({ alert: { msg, type } });
+    setTimeout(() => {
+      this.setState({ alert: null, loading: false })
     }, 2000);
   };
 
-   render() {
-     //destructure state 
-     const {users, user, loading} = this.state;
+  render() {
+    //destructure state 
+    const { users, user, loading } = this.state;
     return (
       <Router>
         <div className="App">
-          <Navbar/>
-            <div className="container">
-              <Alert alert={this.state.alert}/>
-              <Routes>
-                <Route exact path='/' element={<Fragment>
-                    <Search 
-                  searchUsers={this.searchUsers} 
-                  clearUsers={this.clearUsers} 
+          <Navbar />
+          <div className="container">
+            <Alert alert={this.state.alert} />
+            <Routes>
+              <Route exact path='/' element={<Fragment>
+                <Search
+                  searchUsers={this.searchUsers}
+                  searchUsers={this.searchUsers}
+                  searchUsers={this.searchUsers}
+                  clearUsers={this.clearUsers}
+                  clearUsers={this.clearUsers}
+                  clearUsers={this.clearUsers}
                   showClear={users.length > 0 ? true : false}
-                  setAlert = {this.setAlert}
-                  />
+                  setAlert={this.setAlert}
+                />
 
-                  <Users loading={loading} users={users}/>
-                  </Fragment>} />
-                    <Route exact path='/about' element={<About/>} />
-                    <Route exact path='/user/:login' render={(props) => (
-                      <User { ...props} getUser={this.getUser} user={user} loading={loading} />
-                    )} />
-              </Routes>
+                <Users loading={loading} users={users} />
+              </Fragment>} />
+              <Route exact path='/about' element={<About />} />
+              <Route element={(
+                <User getUser={this.getUser} user={user} loading={loading} />
+              )} exact path='/user/:login'
+              />
+            </Routes>
           </div>
         </div>
       </Router>
-     
-    )}
-    };
+
+    )
+  }
+};
 
 export default App;
