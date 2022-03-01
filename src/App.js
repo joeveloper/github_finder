@@ -30,16 +30,17 @@ class App extends Component {
   };
 
   //Get a single github user
-  getUser = async (username) => {
+  getUser = async (login) => {
     this.setState({ loading: true });
-    const res = await axios.get(`https://api.github.com/users?/${username}&client_id=
+    const res = await axios.get(`https://api.github.com/users?/${login}&client_id=
     ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-    this.setState({ users: res.data, loading: false });
+    this.setState({ user: res.data, loading: false });
     console.log(res.data, '<== this is from the `getUser` function')
+    
   }
 
-
+  
   //Clear users from state
   clearUsers = () => {
     this.setState({ users: [], loading: false });
@@ -66,10 +67,6 @@ class App extends Component {
               <Route exact path='/' element={<Fragment>
                 <Search
                   searchUsers={this.searchUsers}
-                  searchUsers={this.searchUsers}
-                  searchUsers={this.searchUsers}
-                  clearUsers={this.clearUsers}
-                  clearUsers={this.clearUsers}
                   clearUsers={this.clearUsers}
                   showClear={users.length > 0 ? true : false}
                   setAlert={this.setAlert}
