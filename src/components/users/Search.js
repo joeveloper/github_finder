@@ -1,47 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 
-export class Search extends Component {
-    state= {
-        text: ''
-    }
+const Search = ({searchUsers, showClear, clearUsers, setAlert}) => {
 
-    
-    //declaring prop types to control data type
-    static propTypes = {
-        searchUsers: PropTypes.func.isRequired,
-        clearUsers: PropTypes.func.isRequired,
-        showClear: PropTypes.bool.isRequired
-    }
-
+    const [text, setText] = useState('');
     //after form submit
-    onSubmit = e => {
+    const onSubmit = e => {
        e.preventDefault();
-       if (this.state.text === "") {
-           this.props.setAlert('please enter something', 'light')
-       }
-       this.props.searchUsers(this.state.text);
-       this.setState({text: ''});
+       if (text === "") {
+           setAlert('please enter something', 'light')
+       } else {
+            searchUsers(text);
+            setText('');
     }
+}
 
     //after entering your searc text
-    onChange = (e) => {
-        this.setState({[e.target.name]: e.target.value});
+    const onChange = (e) => {
+        setText(e.target.value)
     }
-    render() {
-
-        const {showClear, clearUsers} = this.props;
 
         return (
             <div>
-                <form onSubmit={this.onSubmit} className="form">
+                <form onSubmit={onSubmit} className="form">
                     <input 
                     type="text" 
                     name="text"  
                     placeholder='Search users...'
-                    value={this.state.text} 
-                    onChange={this.onChange}
+                    value={text} 
+                    onChange={onChange}
                     />
                     <input type="submit" value="Search" className='btn btn-dark btn-block'/>
                 </form>
@@ -50,7 +39,11 @@ export class Search extends Component {
                 }       
             </div>
         )
-    }
 }
-
+ //declaring prop types to control data type
+ Search.propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired
+}
 export default Search

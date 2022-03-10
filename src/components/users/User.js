@@ -1,21 +1,17 @@
-import React, { Fragment, Component } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import withRouter from '../HOC/withRouter';
 import Spinner from '../layout/Spinner';
+import Repos from '../repos/Repos';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export class User extends Component {
-  async componentDidMount() {
-    await this.props.getUser(this.props.params.login)
-  }
+const User =  ({user, loading, getUser, getUserRepos, repos}) => {
 
-  static propTypes = {
-    loading: PropTypes.bool,
-    user: PropTypes.object.isRequired,
-    getUser: PropTypes.func.isRequired
-  }
-
-  render() {
+  useEffect(() => {
+    getUser(login);
+    getUserRepos(login);
+  })
+   
     const {
       avatar_url,
       location,
@@ -24,10 +20,12 @@ export class User extends Component {
       hireable,
       company,
       blog,
-      html_url
-    } = this.props.user;
-
-const {loading} = this.props;
+      html_url,
+      followers,
+      following,
+      public_repos,
+      public_gists
+    } = user;
 
 if (loading) return <Spinner/>
 
@@ -76,9 +74,26 @@ if (loading) return <Spinner/>
                 </ul>
             </div>
             </div>
+
+            <div className="card text-center">
+            <div className="badge badge-primary">Followers: {followers}</div>
+            <div className="badge badge-success">Following: {following}</div>
+            <div className="badge badge-light">Public Repos: {public_repos}</div>
+            <div className="badge badge-dark">Public Gist: {public_gists}</div>
+            </div>
+
+            <Repos repos={repos}/>
       </Fragment>
     );
   }
+
+
+User.propTypes = {
+  loading: PropTypes.bool,
+  user: PropTypes.object.isRequired,
+  repos: PropTypes.array.isRequired,
+  getUser: PropTypes.func.isRequired,
+  getUserRepos: PropTypes.func.isRequired
 }
 
 export default withRouter(User);

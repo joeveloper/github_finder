@@ -15,8 +15,10 @@ class App extends Component {
   state = {
     users: [],
     user: {},
+    repos: [],
     loading: false,
-    alert: null
+    alert: null,
+    
   }
 
 
@@ -33,10 +35,15 @@ class App extends Component {
   getUser = async (login) => {
     this.setState({ loading: true });
     const res = await axios.get(`https://api.github.com/users/${login}`);
-    this.setState({ user: res.data, loading: false });
-    
+    this.setState({ user: res.data, loading: false }); 
   }
 
+  //get users repos
+  getUserRepos = async (login) => {
+    this.setState({ loading: true });
+    const res = await axios.get(`https://api.github.com/users/${login}/repos?per_page=5&sort=created:asc`); //?per_page=5&sort=created:asc
+    this.setState({ repos: res.data, loading: false }); 
+  }
   
   //Clear users from state
   clearUsers = () => {
@@ -53,7 +60,7 @@ class App extends Component {
 
   render() {
     //destructure state 
-    const { users, user, loading } = this.state;
+    const { users, user, loading, repos } = this.state;
     return (
       <Router>
         <div className="App">
@@ -73,7 +80,14 @@ class App extends Component {
               </Fragment>} />
               <Route exact path='/about' element={<About />} />
               <Route element={(
-                <User getUser={this.getUser} user={user} loading={loading} />
+                <User 
+                getUser={this.getUser}
+                getUserRepos={this.getUserRepos} 
+                user={user} 
+                loading={loading} 
+                repos={repos}
+                />
+
               )} exact path='/user/:login'
               />
             </Routes>
