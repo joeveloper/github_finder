@@ -5,12 +5,14 @@ import Repos from '../repos/Repos';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const User =  ({user, loading, getUser, getUserRepos, repos}) => {
+const User =  ({data, user, loading, getUser, getUserRepos, repos, match}) => {
 
   useEffect(() => {
+    console.log('I rannnn');
+    console.log(data)
     getUser(login);
     getUserRepos(login);
-  })
+  }, []);
    
     const {
       avatar_url,
