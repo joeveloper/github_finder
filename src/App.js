@@ -34,7 +34,7 @@ const App = () => {
   const getUser = async (login) => {
     setLoading(true)
     const res = await axios.get(`https://api.github.com/users/${login}`);
-    setUsers(res.data)
+    setUser(res.data)
     setLoading(false) 
   }
 

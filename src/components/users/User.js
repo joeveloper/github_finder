@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import withRouter from '../HOC/withRouter';
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
@@ -6,14 +7,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const User =  ({data, user, loading, getUser, getUserRepos, repos, match}) => {
-
-  useEffect(() => {
-    console.log('I rannnn');
-    console.log(data)
-    getUser(login);
-    getUserRepos(login);
-  }, []);
-   
+  const params = useParams()
     const {
       avatar_url,
       location,
@@ -28,6 +22,11 @@ const User =  ({data, user, loading, getUser, getUserRepos, repos, match}) => {
       public_repos,
       public_gists
     } = user;
+
+    useEffect(() => {
+      getUser(params.login);
+      getUserRepos(params.login);
+    }, []);
 
 if (loading) return <Spinner/>
 
