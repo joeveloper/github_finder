@@ -4,4 +4,4 @@ const githubContext = createContext();
 
 export default githubContext;
 
-Soldeirboy@17git
+Soldierboy@17git
