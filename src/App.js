@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import GithubState from './context/github/GithubState';
+
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
@@ -8,6 +10,7 @@ import Search from './components/users/Search';
 import About from './components/pages/About';
 import { Alert } from './components/layout/Alert';
 import User from './components/users/User';
+
 
 const App = () => {
 
@@ -36,6 +39,7 @@ const App = () => {
     const res = await axios.get(`https://api.github.com/users/${login}`);
     setUser(res.data)
     setLoading(false) 
+    console.log(res.data)
   }
 
 
@@ -64,8 +68,8 @@ const App = () => {
   };
 
  
-    //destructure state 
     return (
+      <GithubState>
       <Router>
         <div className="App">
           <Navbar />
@@ -98,7 +102,7 @@ const App = () => {
           </div>
         </div>
       </Router>
-
+      </GithubState>
     )
   };
 

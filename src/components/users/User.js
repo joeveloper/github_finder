@@ -53,7 +53,7 @@ if (loading) return <Spinner/>
                 <p>{bio}</p>
                 </Fragment>
               )}
-                <a href={html_url} className='btn btn-dark my-1'>
+                <a href={html_url} target='_blank' rel="noreferrer" className='btn btn-dark my-1'>
                   View github profile
                 </a>
                 <ul>
@@ -69,7 +69,7 @@ if (loading) return <Spinner/>
                   </li>
                   <li>
                     {blog && <Fragment>
-                      <strong> Website: </strong> {blog}
+                      <strong> Website: </strong> <a href= {blog} target='_blank' rel="noreferrer"> {blog} </a>
                       </Fragment>}
                   </li>
                 </ul>
