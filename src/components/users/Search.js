@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useContext} from 'react';
+import GithubContext from '../../context/github/githubContext';
 
 
-const Search = ({searchUsers, showClear, clearUsers, showAlert}) => {
+const Search = ({ showClear, clearUsers, showAlert}) => {
+
+    const githubContext = useContext(GithubContext)
 
     const [text, setText] = useState('');
     //after form submit
@@ -12,7 +15,7 @@ const Search = ({searchUsers, showClear, clearUsers, showAlert}) => {
        if (text === "") {
            showAlert('please enter something', 'light')
        } else {
-            searchUsers(text);
+            githubContext.searchUsers(text);
             setText('');
     }
 }
@@ -42,7 +45,6 @@ const Search = ({searchUsers, showClear, clearUsers, showAlert}) => {
 }
  //declaring prop types to control data type
  Search.propTypes = {
-    searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
     showClear: PropTypes.bool.isRequired
 }
