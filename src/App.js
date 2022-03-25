@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import GithubState from './context/github/GithubState';
-
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
@@ -77,7 +76,7 @@ const App = () => {
                   showAlert={showAlert}
                 />
 
-                <Users loading={loading} users={users} />
+                <Users  />
               </Fragment>} />
               <Route exact path='/about' element={<About />} />
               <Route element={(

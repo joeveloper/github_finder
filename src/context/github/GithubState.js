@@ -20,7 +20,7 @@ const GithubState = props => {
   }
 
   const [state, dispatch] = useReducer(GithubReducer, initialState);
-  // Searc User
+  // Search User
   const searchUsers = async (text) => {
     setLoading();
     const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=
