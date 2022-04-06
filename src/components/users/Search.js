@@ -4,9 +4,12 @@ import { useState, useContext} from 'react';
 import GithubContext from '../../context/github/githubContext';
 
 
-const Search = ({ showClear, clearUsers, showAlert}) => {
+const Search = ({showAlert}) => {
 
     const githubContext = useContext(GithubContext)
+
+    const { users, clearUsers} = githubContext; 
+
 
     const [text, setText] = useState('');
     //after form submit
@@ -37,15 +40,16 @@ const Search = ({ showClear, clearUsers, showAlert}) => {
                     />
                     <input type="submit" value="Search" className='btn btn-dark btn-block'/>
                 </form>
-                {showClear && <button className="btn btn-light btn-block" 
+
+
+                {users.items && users.items.length > 0 && (<button className="btn btn-light btn-block" 
                 onClick={clearUsers}>Clear</button>
-                }       
+                )}       
             </div>
         )
 }
  //declaring prop types to control data type
- Search.propTypes = {
-    clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.bool.isRequired
-}
+//  Search.propTypes = {
+//     showAlert: PropTypes.func.isRequired
+// }
 export default Search

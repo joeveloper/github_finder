@@ -9,14 +9,13 @@ import Search from './components/users/Search';
 import About from './components/pages/About';
 import { Alert } from './components/layout/Alert';
 import User from './components/users/User';
-import { SEARCH_USERS } from './context/types';
+import { SEARCH_USERS, GET_USER } from './context/types';
 
 
 const App = () => {
 
     //set state initial values 
-  const [users, setUsers] = useState([])
-  const [user, setUser] = useState({})
+
   const [repos, setRepos] = useState([])
   const [loading, setLoading] = useState(false)
   const [alert, setAlert] = useState(null)
@@ -26,14 +25,7 @@ const App = () => {
   //Search Github users using the GET API
   
 
-  //Get a single github user
-  const getUser = async (login) => {
-    setLoading(true)
-    const res = await axios.get(`https://api.github.com/users/${login}`);
-    setUser(res.data)
-    setLoading(false) 
-    console.log(res.data)
-  }
+ 
 
 
   //get users repos
@@ -46,11 +38,7 @@ const App = () => {
   }
   
   //Clear users from state
-  const clearUsers = () => {
-    setUsers([])
-    setLoading(false)
-  }
-
+ 
   //Set alert for empty search string
   const showAlert = (msg, type) => {
     setAlert( { msg, type } ) 
@@ -71,20 +59,17 @@ const App = () => {
             <Routes>
               <Route exact path='/' element={<Fragment>
                 <Search
-                  clearUsers={clearUsers}
-                  showClear={users.length > 0 ? true : false}
+                  // clearUsers={clearUsers}
+                  // showClear={users.length > 0 ? true : false}
                   showAlert={showAlert}
                 />
 
-                <Users  />
+                <Users />
               </Fragment>} />
               <Route exact path='/about' element={<About />} />
               <Route element={(
                 <User 
-                getUser={getUser}
                 getUserRepos={getUserRepos} 
-                user={user} 
-                loading={loading} 
                 repos={repos}
                 />
 

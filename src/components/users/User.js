@@ -1,12 +1,23 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import withRouter from '../HOC/withRouter';
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import GithubContext from '../../context/github/githubContext';
 
-const User =  ({data, user, loading, getUser, getUserRepos, repos, match}) => {
+const User =  ({data,  getUserRepos, repos, match}) => {
+  const githubContext = useContext(GithubContext);
+
+  const {user, loading, getUser} = githubContext;
+
+  useEffect(() => {
+    getUser(params.login);
+    getUserRepos(params.login);
+  }, []);
+
+
   const params = useParams()
     const {
       avatar_url,
@@ -23,10 +34,7 @@ const User =  ({data, user, loading, getUser, getUserRepos, repos, match}) => {
       public_gists
     } = user;
 
-    useEffect(() => {
-      getUser(params.login);
-      getUserRepos(params.login);
-    }, []);
+    
 
 if (loading) return <Spinner/>
 
@@ -90,10 +98,7 @@ if (loading) return <Spinner/>
 
 
 User.propTypes = {
-  loading: PropTypes.bool,
-  user: PropTypes.object.isRequired,
   repos: PropTypes.array.isRequired,
-  getUser: PropTypes.func.isRequired,
   getUserRepos: PropTypes.func.isRequired
 }
 

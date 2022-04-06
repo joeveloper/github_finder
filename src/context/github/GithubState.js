@@ -6,6 +6,7 @@ import {
   SEARCH_USERS,
   SET_LOADING,
   CLEAR_USERS,
+  GET_USER,
   GET_REPOS,
   SHOW_ALERT,
   REMOVE_ALERT
@@ -33,11 +34,25 @@ const GithubState = props => {
     );
   };
 
-  //Get User
+   //Get a single github user
+   const getUser = async (login) => {
+    setLoading()
+    const res = await axios.get(`https://api.github.com/users/${login}`);
+   
+    dispatch({
+      type: GET_USER,
+      payload: res.data
+    });
+  }
 
   //get repos
 
   //Clear Users
+  const clearUsers = () => dispatch({
+    type: CLEAR_USERS
+  })
+
+
 
   //Set Loading
   const setLoading = () => dispatch({type: SET_LOADING});
@@ -49,7 +64,9 @@ const GithubState = props => {
         user: state.user,
         repos: state.repos,
         loading: state.loading,
-        searchUsers
+        searchUsers,
+        clearUsers,
+        getUser
       }}
   >
     {props.children}

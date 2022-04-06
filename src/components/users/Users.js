@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
 import UserItem from './UserItem';
 import Spinner from '../layout/Spinner';
-import PropTypes from 'prop-types';
 import GithubContext from '../../context/github/githubContext';
 
 const Users = ()  => {
     const githubContext = useContext(GithubContext);
 
-    const {loading, users} = githubContext;
+    //destructure users and loading from github state via context
+    const {loading, users} = githubContext; 
 
     if (loading) {
         return <Spinner/>
@@ -15,18 +15,14 @@ const Users = ()  => {
     else {
         return (
             <div style={userStyle}>
-               {users.items.length > 0 && users.items.map(user => (
+               { users.items && users.items.length > 0 && users.items.map(user => (
                    <UserItem key={user.id} user={user}/>
                ))}    
-            </div>
+            </div> 
         )
     }  
 }
 
-Users.propTypes = {
-    // users: PropTypes.array.isRequired,
-    // loading: PropTypes.bool.isRequired
-}
 
     const userStyle = {
         display: 'grid',
