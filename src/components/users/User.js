@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import GithubContext from '../../context/github/githubContext';
 
-const User =  ({data,  getUserRepos, repos, match}) => {
+const User =  () => {
   const githubContext = useContext(GithubContext);
 
-  const {user, loading, getUser} = githubContext;
+  const {user, loading, getUser,  getUserRepos, repos} = githubContext;
 
   useEffect(() => {
     getUser(params.login);

@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import axios from 'axios';
 import GithubState from './context/github/GithubState';
 import './App.css';
 import Navbar from './components/layout/Navbar';
@@ -9,46 +8,21 @@ import Search from './components/users/Search';
 import About from './components/pages/About';
 import { Alert } from './components/layout/Alert';
 import User from './components/users/User';
-import { SEARCH_USERS, GET_USER } from './context/types';
 
 
 const App = () => {
 
     //set state initial values 
-
-  const [repos, setRepos] = useState([])
-  const [loading, setLoading] = useState(false)
   const [alert, setAlert] = useState(null)
-
-
-
-  //Search Github users using the GET API
-  
-
- 
-
-
-  //get users repos
-  const getUserRepos = async (login) => {
-    setLoading(true)
-
-    const res = await axios.get(`https://api.github.com/users/${login}/repos?per_page=5&sort=created:asc`); //?per_page=5&sort=created:asc
-    setRepos(res.data)
-    setLoading(false)
-  }
-  
-  //Clear users from state
  
   //Set alert for empty search string
   const showAlert = (msg, type) => {
     setAlert( { msg, type } ) 
     setTimeout(() => {
       setAlert(null);
-      setLoading(false)
     }, 2000);
   };
 
- 
     return (
       <GithubState>
       <Router>
@@ -68,11 +42,7 @@ const App = () => {
               </Fragment>} />
               <Route exact path='/about' element={<About />} />
               <Route element={(
-                <User 
-                getUserRepos={getUserRepos} 
-                repos={repos}
-                />
-
+                <User />
               )} exact path='/user/:login'
               />
             </Routes>
