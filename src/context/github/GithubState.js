@@ -12,13 +12,16 @@ import {
   REMOVE_ALERT
 } from '../types';
 
+
 const GithubState = props => {
+
   const initialState = {
     users: [],
     user: {},
     repos: [],
     loading: false
   }
+  
 
   const [state, dispatch] = useReducer(GithubReducer, initialState);
   // Search User
@@ -42,6 +45,9 @@ const GithubState = props => {
       payload: res.data
     });
   }
+  //Set Loading
+  const setLoading = () => dispatch({type: SET_LOADING});
+
 
   //get repos
   const getUserRepos = async (login) => {
@@ -57,10 +63,6 @@ const GithubState = props => {
     type: CLEAR_USERS
   })
 
-
-
-  //Set Loading
-  const setLoading = () => dispatch({type: SET_LOADING});
 
     return (
     <GithubContext.Provider
@@ -78,6 +80,7 @@ const GithubState = props => {
     {props.children}
   </GithubContext.Provider>
   )
+    ;
 }}
 
 export default GithubState;

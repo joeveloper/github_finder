@@ -33,7 +33,7 @@ import {
           ...state,
           repos: action.payload,
           loading: false
-        }
+        };
         case SET_LOADING:
             return {
                 ...state,

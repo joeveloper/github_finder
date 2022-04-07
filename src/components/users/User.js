@@ -12,11 +12,7 @@ const User =  () => {
 
   const {user, loading, getUser,  getUserRepos, repos} = githubContext;
 
-  useEffect(() => {
-    getUser(params.login);
-    getUserRepos(params.login);
-  }, []);
-
+ 
 
   const params = useParams()
     const {
@@ -34,6 +30,11 @@ const User =  () => {
       public_gists
     } = user;
 
+    useEffect(() => {
+      getUser(params.login);
+      getUserRepos(params.login);
+    }, []);
+  
     
 
 if (loading) return <Spinner/>
