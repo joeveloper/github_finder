@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import withRouter from '../HOC/withRouter';
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import GithubContext from '../../context/github/githubContext';
 
@@ -98,9 +97,6 @@ if (loading) return <Spinner/>
   }
 
 
-User.propTypes = {
-  repos: PropTypes.array.isRequired,
-  getUserRepos: PropTypes.func.isRequired
-}
+
 
 export default withRouter(User);
